@@ -7,7 +7,7 @@ var app= koa();
 var log4js = require("log4js");
 log4js.configure(require("./config/logging.js"));
 var views = require('koa-views');
-
+var socketio  = require('socket.io');
 //setting up static directory
 app.use(require('koa-static')(__dirname + '/public'));
 
@@ -29,6 +29,14 @@ app
 	.use(router.allowedMethods());
 
 
+//var http = require('http').Server(app.callback());
+//var io = require('socket.io')(http);
 
 
-app.listen(8080);
+var server    = app.listen(8080);
+var io        = require('socket.io').listen(server);
+
+require("./sockets/connected")(io);
+
+
+

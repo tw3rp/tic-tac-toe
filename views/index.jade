@@ -1,16 +1,34 @@
 extends layout
 
 block content
-	table
+	table(width='50%', border='1')
 		tr
-			td O
-			td
-			td
+			td(width='33%',id="r1c1")
+				i.fa.fa-circle-o.fa-3x 
+			td(width='33%',id="r1c2")
+			td(width='33%',id="r1c3")
 		tr
-			td
-			td X
-			td
+			td(width='33%',id="r2c1")
+				i.fa.fa-circle-o.fa-3x 
+			td(width='33%',id="r2c2")
+			td(width='33%',id="r2c3")
 		tr
-			td
-			td
-			td X
+			td(width='33%',id="r3c1")
+				i.fa.fa-circle-o.fa-3x 
+			td(width='33%',id="r3c2")
+			td(width='33%',id="r3c3")
+
+	script(type='text/javascript').
+		$('#r1c1').click(function(){
+			console.log("clicked");
+			socket.emit("moved", "r1c1");
+		});
+		
+
+
+		socket.on('connected_player', function(data){
+    	player.id = data.id;
+    	player.name = data.name;
+    	player.mark = data.mark;
+
+  	});

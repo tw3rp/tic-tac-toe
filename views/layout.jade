@@ -3,7 +3,19 @@ html
   title Tic Tac Toe
   // core CSS
   link(href='css/bootstrap.min.css', rel='stylesheet')
-  link(href='css/font-awesome.min.css', rel='stylesheet')
+  link(href='css/font-awesome.css', rel='stylesheet')
   link(href='css/main.css', rel='stylesheet')
+  script(src='socket.io.js')
+  script(src='http://code.jquery.com/jquery-1.6.2.min.js')
+  script.
+    var socket = io();
+    var player = {
+       id: 0,
+       name: prompt("Whats your name:"),
+       mark: 'x'
+     }
+     socket.on('connect', function () {
+       socket.emit('client_connected', player);
+     });
   body
     block content
