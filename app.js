@@ -18,7 +18,7 @@ default: 'jade'
 }));
 
 /** setting up database*/
-require('./config/db.js');
+var conn = require('./config/db.js');
 //koa router 
 var env = process.env.NODE_ENV || 'development';
 
@@ -36,7 +36,6 @@ app
 var server    = app.listen(8080);
 var io        = require('socket.io').listen(server);
 
-require("./sockets/connected")(io);
-
+require("./sockets/connected")(io,conn);
 
 

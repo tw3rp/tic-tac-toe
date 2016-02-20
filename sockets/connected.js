@@ -66,7 +66,7 @@ var on_connected = function(io){
     			(initial_data["r1c1"] == initial_data["r2c1"] && initial_data["r2c1"] == initial_data["r3c1"] && initial_data["r1c1"] != "")||
     			(initial_data["r1c2"] == initial_data["r2c2"] && initial_data["r2c2"] == initial_data["r3c2"] && initial_data["r1c2"] != "")||
     			(initial_data["r1c3"] == initial_data["r2c2"] && initial_data["r2c3"] == initial_data["r3c3"] && initial_data["r1c3"] != "")||
-    			// first diagnal check
+    			//diagnal check
     			(initial_data["r1c1"] == initial_data["r2c2"] && initial_data["r2c2"] == initial_data["r3c3"] && initial_data["r1c1"] != "")||
   				(initial_data["r3c1"] == initial_data["r2c2"] && initial_data["r2c2"] == initial_data["r1c3"] && initial_data["r3c1"] != "")
   		
@@ -78,17 +78,6 @@ var on_connected = function(io){
 
 		socket.on('disconnect', function()
    {
-   		 initial_data = {
-  'r1c1':'', 
-  'r1c2':'', 
-  'r1c3':'',
-  'r2c1':'', 
-  'r2c2':'', 
-  'r2c3':'',
-  'r3c1':'', 
-  'r3c2':'', 
-  'r3c3':''
-}
      var j = 0;
      var n = 0;
      var tmp = [];
@@ -100,7 +89,7 @@ var on_connected = function(io){
          if(players[j].mark == 'o')
          {
            xo = 'o';
-           o = false;
+           other_player = false;
          }
          if(players[j].mark == 'x')
          {
@@ -119,6 +108,17 @@ var on_connected = function(io){
      	
      	players = tmp;
      	i = j;
+     	initial_data = {
+  			'r1c1':'', 
+			  'r1c2':'', 
+			  'r1c3':'',
+			  'r2c1':'', 
+			  'r2c2':'', 
+			  'r2c3':'',
+			  'r3c1':'', 
+			  'r3c2':'', 
+			  'r3c3':''
+			}
       io.sockets.emit('load', players);
    	});
 	});
