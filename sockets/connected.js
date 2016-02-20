@@ -14,8 +14,23 @@ var xo= "x"
 var other_player = false;
 var players= [];
 var i = 0;
-var on_connected = function(io){
-	io.on('connection', function(socket)
+
+function saveToDb(data,History,id){
+	console.log("Saving to Database >>>>>>>>>>>>>>>>>>>>>>>",data)
+	History.update({_id:id},{$set:{_id:id},$set:data},{multi:true,upsert:true},function(err,res){
+		if(err) 
+			{
+				console.log(err);
+			}
+		else{
+			console.log(res);
+		}
+	});
+}
+
+var on_connected = function(io,conn){
+  var History =  require("../models/history")(conn);	
+  io.on('connection', function(socket)
 	{		
 			socket.on('client_connected', function(player)
   		{
@@ -51,7 +66,10 @@ var on_connected = function(io){
 				}
     
     		console.log(initial_data);
-    // Update clients with the move
+    		//save to the database
+    		//History.update({_id:socket.id},)
+    		saveToDb(initial_data,History,socket.id);	
+	    // Update clients with the move
     	io.sockets.emit('mark', marked);
 
     	//to check if the game is finished
